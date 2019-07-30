@@ -1,0 +1,54 @@
+<div class="container person-margin-top">
+    <div *ngIf="!editMode">
+        <button class="btn btn-primary" (click)="createPerson()">Create User</button>
+    </div>
+
+    <div div *ngIf="editMode">
+        <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+            <div class="row col-6">
+                <input type="text" class="col-7 form-control" id="name" placeholder="Name" ngModel name="name" required
+                    pattern="[A-Za-z\s]{3,20}">
+                <button type="submit" class="col-3 btn btn-info person-margin-left" data-toggle="tooltip" title="please enter a name with 3 to 20 charcters!"
+                    [disabled]="!form.valid">Save</button>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-sm table-hover table-bordered persons-table person-margin-top">
+        <thead class="persons-table-head">
+            <tr>
+                <th scope="col" style="width: 25%">ID</th>
+                <th scope="col" style="width: 50%">Name</th>
+                <th scope="col" style="width: 25%">Actions</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let person of registeredPersons; let i = index">
+            <tr>
+                <td>{{person.id}}</td>
+                <td><span *ngIf="!person.editMode">{{person.name}}</span>
+                    <form #editForm="ngForm">
+                        <input *ngIf="person.editMode" type="text" class="col-7 form-control" id="name"
+                            placeholder="Name" [(ngModel)]="person.name" name="name_{{i}}" required
+                            pattern="[A-Za-z\s]{3,20}" data-toggle="tooltip" title="please enter a name with 3 to 20 charcters!">
+                    </form>
+                </td>
+                <td><button *ngIf="!person.editMode" class="btn btn-sm btn-info person-margin-left"
+                        (click)="editPerson(i)" data-toggle="tooltip" title="edit person's name">
+                        <fa-icon icon="edit"></fa-icon>
+                    </button>
+                    <button *ngIf="person.editMode" class="btn btn-sm btn-info person-margin-left"
+                        (click)="updatePerson(i)" [disabled]="!editForm.valid" data-toggle="tooltip" title="confirm changes">
+                        <fa-icon icon="check"></fa-icon>
+                    </button>
+                    <button *ngIf="!person.editMode" class="btn btn-sm btn-danger person-margin-left"
+                        (click)="deletePerson(i)" data-toggle="tooltip" title="delete person">
+                        <fa-icon icon="trash"></fa-icon>
+                    </button>
+                    <button *ngIf="person.editMode" class="btn btn-sm btn-danger person-margin-left"
+                        (click)="cancelEditPerson(i)" data-toggle="tooltip" title="cancel changes">
+                        <fa-icon icon="ban"></fa-icon>
+                    </button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

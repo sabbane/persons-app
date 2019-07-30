@@ -1,0 +1,16 @@
+.person-margin-left{
+    margin-left: 10px;
+}
+
+.person-margin-top {
+    margin-top: 20px;
+}
+
+.persons-table {
+    background-color: #C8E6C9;
+}
+
+.persons-table-head {
+	background-color: #43A047;
+	color: white;
+}
